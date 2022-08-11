@@ -95,6 +95,7 @@ void *minpool_alloc(struct minpool_head *head, size_t size)
 
         gnode_set_size(node, size);
         head->avail -= sizeof(*free);
+        fsize = size;
     }
 
     /* Set node used */
@@ -102,7 +103,7 @@ void *minpool_alloc(struct minpool_head *head, size_t size)
     list_del_init(&node->free);
 
     /* Adjust heap available size */
-    head->avail -= size;
+    head->avail -= fsize;
     return node->data;
 }
 
